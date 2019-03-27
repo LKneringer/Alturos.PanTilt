@@ -239,6 +239,11 @@ namespace Alturos.PanTilt.TestUI
             this._panTiltControl.StopMoving();
         }
 
+        private void checkBoxTiltInvert_CheckedChanged(object sender, EventArgs e)
+        {
+            this._panTiltControl.InvertTilt(checkBoxTiltInvert.Checked);
+        }
+
         #endregion
 
         #region Mouse Control
@@ -377,22 +382,22 @@ namespace Alturos.PanTilt.TestUI
 
         private void buttonLimitUp_Click(object sender, EventArgs e)
         {
-            ((EneoPanTiltControl)this._panTiltControl).SetLimitUp();
+            ((EneoPanTiltControl)this._panTiltControl).SetLimit(Limits.Up);
         }
 
         private void buttonSetLimitDown_Click(object sender, EventArgs e)
         {
-            ((EneoPanTiltControl)this._panTiltControl).SetLimitDown();
+            ((EneoPanTiltControl)this._panTiltControl).SetLimit(Limits.Down);
         }
 
         private void buttonLimitLeft_Click(object sender, EventArgs e)
         {
-            ((EneoPanTiltControl)this._panTiltControl).SetLimitLeft();
+            ((EneoPanTiltControl)this._panTiltControl).SetLimit(Limits.Left);
         }
 
         private void buttonSetLimitRight_Click(object sender, EventArgs e)
         {
-            ((EneoPanTiltControl)this._panTiltControl).SetLimitRigth();
+            ((EneoPanTiltControl)this._panTiltControl).SetLimit(Limits.Right);
         }
 
         private void buttonReinitialize_Click(object sender, EventArgs e)
@@ -426,18 +431,18 @@ namespace Alturos.PanTilt.TestUI
                 //PanMin
                 this._panTiltControl.PanRelative(-30);
                 this._positionChecker.ComparePosition(new PanTiltPosition(limits.PanMin - 10, 0), tolerance: 5, timeout: 50, retry: 200);
-                ((EneoPanTiltControl)this._panTiltControl).SetLimitLeft();
+                ((EneoPanTiltControl)this._panTiltControl).SetLimit(Limits.Left);
                 this._panTiltControl.PanAbsolute(limits.PanMin);
                 this._positionChecker.ComparePosition(new PanTiltPosition(limits.PanMin, 0));
-                ((EneoPanTiltControl)this._panTiltControl).SetLimitLeft();
+                ((EneoPanTiltControl)this._panTiltControl).SetLimit(Limits.Left);
 
                 //PanMax
                 this._panTiltControl.PanRelative(30);
                 this._positionChecker.ComparePosition(new PanTiltPosition(limits.PanMax + 10, 0), tolerance: 5, timeout: 50, retry: 200);
-                ((EneoPanTiltControl)this._panTiltControl).SetLimitRigth();
+                ((EneoPanTiltControl)this._panTiltControl).SetLimit(Limits.Right);
                 this._panTiltControl.PanAbsolute(limits.PanMax);
                 this._positionChecker.ComparePosition(new PanTiltPosition(limits.PanMax, 0));
-                ((EneoPanTiltControl)this._panTiltControl).SetLimitRigth();
+                ((EneoPanTiltControl)this._panTiltControl).SetLimit(Limits.Right);
 
                 //Move to zero position
                 this._panTiltControl.PanTiltAbsolute(0, 0);
@@ -446,18 +451,18 @@ namespace Alturos.PanTilt.TestUI
                 //TiltMin
                 this._panTiltControl.TiltRelative(-20);
                 this._positionChecker.ComparePosition(new PanTiltPosition(0, limits.TiltMin - 10), tolerance: 5, timeout: 50, retry: 200);
-                ((EneoPanTiltControl)this._panTiltControl).SetLimitDown();
+                ((EneoPanTiltControl)this._panTiltControl).SetLimit(Limits.Down);
                 this._panTiltControl.TiltAbsolute(limits.TiltMin);
                 this._positionChecker.ComparePosition(new PanTiltPosition(0, limits.TiltMin));
-                ((EneoPanTiltControl)this._panTiltControl).SetLimitDown();
+                ((EneoPanTiltControl)this._panTiltControl).SetLimit(Limits.Down);
 
                 //TiltMax
                 this._panTiltControl.TiltRelative(20);
                 this._positionChecker.ComparePosition(new PanTiltPosition(0, limits.TiltMax + 10), tolerance: 5, timeout: 50, retry: 200);
-                ((EneoPanTiltControl)this._panTiltControl).SetLimitUp();
+                ((EneoPanTiltControl)this._panTiltControl).SetLimit(Limits.Up);
                 this._panTiltControl.TiltAbsolute(limits.TiltMax);
                 this._positionChecker.ComparePosition(new PanTiltPosition(0, limits.TiltMax));
-                ((EneoPanTiltControl)this._panTiltControl).SetLimitUp();
+                ((EneoPanTiltControl)this._panTiltControl).SetLimit(Limits.Up);
 
                 //Enable limits
                 ((EneoPanTiltControl)this._panTiltControl).EnableLimit();

@@ -96,13 +96,14 @@ namespace Alturos.PanTilt.TestUI
             this.tabPageLiveView = new System.Windows.Forms.TabPage();
             this.pictureBox_CameraPos = new System.Windows.Forms.PictureBox();
             this.tabPageMovementCheck = new System.Windows.Forms.TabPage();
-            this.continiousMovementControl1 = new Alturos.PanTilt.TestUI.CustomControl.ContiniousMovementControl();
             this.tabPageFastMovement = new System.Windows.Forms.TabPage();
-            this.fastMovementControl1 = new Alturos.PanTilt.TestUI.CustomControl.FastMovementControl();
-            this.tabPageCommunicationHistory = new System.Windows.Forms.TabPage();
-            this.communicationHistoryControl1 = new Alturos.PanTilt.TestUI.CustomControl.CommunicationHistoryControl();
             this.tabPageAbsolutePosition = new System.Windows.Forms.TabPage();
+            this.tabPageCommunicationHistory = new System.Windows.Forms.TabPage();
+            this.continiousMovementControl1 = new Alturos.PanTilt.TestUI.CustomControl.ContiniousMovementControl();
+            this.fastMovementControl1 = new Alturos.PanTilt.TestUI.CustomControl.FastMovementControl();
             this.absolutePositionControl1 = new Alturos.PanTilt.TestUI.CustomControl.AbsolutePositionControl();
+            this.communicationHistoryControl1 = new Alturos.PanTilt.TestUI.CustomControl.CommunicationHistoryControl();
+            this.checkBoxTiltInvert = new System.Windows.Forms.CheckBox();
             this.groupBox2.SuspendLayout();
             this.groupBoxControls.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -129,8 +130,8 @@ namespace Alturos.PanTilt.TestUI
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_CameraPos)).BeginInit();
             this.tabPageMovementCheck.SuspendLayout();
             this.tabPageFastMovement.SuspendLayout();
-            this.tabPageCommunicationHistory.SuspendLayout();
             this.tabPageAbsolutePosition.SuspendLayout();
+            this.tabPageCommunicationHistory.SuspendLayout();
             this.SuspendLayout();
             // 
             // buttonPanRelative
@@ -157,7 +158,7 @@ namespace Alturos.PanTilt.TestUI
             // 
             this.buttonStopMoving.Location = new System.Drawing.Point(6, 67);
             this.buttonStopMoving.Name = "buttonStopMoving";
-            this.buttonStopMoving.Size = new System.Drawing.Size(500, 27);
+            this.buttonStopMoving.Size = new System.Drawing.Size(228, 27);
             this.buttonStopMoving.TabIndex = 3;
             this.buttonStopMoving.Text = "Stop Moving";
             this.buttonStopMoving.UseVisualStyleBackColor = true;
@@ -189,7 +190,7 @@ namespace Alturos.PanTilt.TestUI
             this.panelMouseControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelMouseControl.Location = new System.Drawing.Point(0, 0);
             this.panelMouseControl.Name = "panelMouseControl";
-            this.panelMouseControl.Size = new System.Drawing.Size(506, 180);
+            this.panelMouseControl.Size = new System.Drawing.Size(506, 199);
             this.panelMouseControl.TabIndex = 14;
             this.panelMouseControl.Paint += new System.Windows.Forms.PaintEventHandler(this.panelMouseControl_Paint);
             this.panelMouseControl.MouseClick += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseClick);
@@ -236,7 +237,7 @@ namespace Alturos.PanTilt.TestUI
             this.tabPageMouseControl.Location = new System.Drawing.Point(4, 22);
             this.tabPageMouseControl.Name = "tabPageMouseControl";
             this.tabPageMouseControl.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageMouseControl.Size = new System.Drawing.Size(512, 222);
+            this.tabPageMouseControl.Size = new System.Drawing.Size(512, 241);
             this.tabPageMouseControl.TabIndex = 0;
             this.tabPageMouseControl.Text = "Mouse Control";
             this.tabPageMouseControl.UseVisualStyleBackColor = true;
@@ -257,8 +258,8 @@ namespace Alturos.PanTilt.TestUI
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.groupBoxSpeed);
-            this.splitContainer1.Size = new System.Drawing.Size(506, 216);
-            this.splitContainer1.SplitterDistance = 180;
+            this.splitContainer1.Size = new System.Drawing.Size(506, 235);
+            this.splitContainer1.SplitterDistance = 199;
             this.splitContainer1.TabIndex = 16;
             // 
             // groupBoxSpeed
@@ -286,6 +287,7 @@ namespace Alturos.PanTilt.TestUI
             // 
             // tabPageManualControl
             // 
+            this.tabPageManualControl.Controls.Add(this.checkBoxTiltInvert);
             this.tabPageManualControl.Controls.Add(this.label7);
             this.tabPageManualControl.Controls.Add(this.groupBox6);
             this.tabPageManualControl.Controls.Add(this.groupBox1);
@@ -439,7 +441,7 @@ namespace Alturos.PanTilt.TestUI
             this.tabPageLimits.Location = new System.Drawing.Point(4, 22);
             this.tabPageLimits.Name = "tabPageLimits";
             this.tabPageLimits.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageLimits.Size = new System.Drawing.Size(512, 222);
+            this.tabPageLimits.Size = new System.Drawing.Size(512, 241);
             this.tabPageLimits.TabIndex = 3;
             this.tabPageLimits.Text = "Limits";
             this.tabPageLimits.UseVisualStyleBackColor = true;
@@ -685,7 +687,7 @@ namespace Alturos.PanTilt.TestUI
             this.tabPageCameraZoom.Location = new System.Drawing.Point(4, 22);
             this.tabPageCameraZoom.Name = "tabPageCameraZoom";
             this.tabPageCameraZoom.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageCameraZoom.Size = new System.Drawing.Size(512, 222);
+            this.tabPageCameraZoom.Size = new System.Drawing.Size(512, 241);
             this.tabPageCameraZoom.TabIndex = 1;
             this.tabPageCameraZoom.Text = "Camera Zoom";
             this.tabPageCameraZoom.UseVisualStyleBackColor = true;
@@ -760,7 +762,7 @@ namespace Alturos.PanTilt.TestUI
             this.tabPageInfo.Location = new System.Drawing.Point(4, 22);
             this.tabPageInfo.Name = "tabPageInfo";
             this.tabPageInfo.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageInfo.Size = new System.Drawing.Size(512, 222);
+            this.tabPageInfo.Size = new System.Drawing.Size(512, 241);
             this.tabPageInfo.TabIndex = 4;
             this.tabPageInfo.Text = "Info";
             this.tabPageInfo.UseVisualStyleBackColor = true;
@@ -866,14 +868,6 @@ namespace Alturos.PanTilt.TestUI
             this.tabPageMovementCheck.Text = "Continious Movement Check";
             this.tabPageMovementCheck.UseVisualStyleBackColor = true;
             // 
-            // continiousMovementControl1
-            // 
-            this.continiousMovementControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.continiousMovementControl1.Location = new System.Drawing.Point(3, 3);
-            this.continiousMovementControl1.Name = "continiousMovementControl1";
-            this.continiousMovementControl1.Size = new System.Drawing.Size(1119, 558);
-            this.continiousMovementControl1.TabIndex = 20;
-            // 
             // tabPageFastMovement
             // 
             this.tabPageFastMovement.Controls.Add(this.fastMovementControl1);
@@ -884,33 +878,6 @@ namespace Alturos.PanTilt.TestUI
             this.tabPageFastMovement.TabIndex = 3;
             this.tabPageFastMovement.Text = "Fast Movement Check";
             this.tabPageFastMovement.UseVisualStyleBackColor = true;
-            // 
-            // fastMovementControl1
-            // 
-            this.fastMovementControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.fastMovementControl1.Location = new System.Drawing.Point(3, 3);
-            this.fastMovementControl1.Name = "fastMovementControl1";
-            this.fastMovementControl1.Size = new System.Drawing.Size(1119, 558);
-            this.fastMovementControl1.TabIndex = 0;
-            // 
-            // tabPageCommunicationHistory
-            // 
-            this.tabPageCommunicationHistory.Controls.Add(this.communicationHistoryControl1);
-            this.tabPageCommunicationHistory.Location = new System.Drawing.Point(4, 22);
-            this.tabPageCommunicationHistory.Name = "tabPageCommunicationHistory";
-            this.tabPageCommunicationHistory.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageCommunicationHistory.Size = new System.Drawing.Size(1125, 564);
-            this.tabPageCommunicationHistory.TabIndex = 2;
-            this.tabPageCommunicationHistory.Text = "Communication History";
-            this.tabPageCommunicationHistory.UseVisualStyleBackColor = true;
-            // 
-            // communicationHistoryControl1
-            // 
-            this.communicationHistoryControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.communicationHistoryControl1.Location = new System.Drawing.Point(3, 3);
-            this.communicationHistoryControl1.Name = "communicationHistoryControl1";
-            this.communicationHistoryControl1.Size = new System.Drawing.Size(1119, 558);
-            this.communicationHistoryControl1.TabIndex = 0;
             // 
             // tabPageAbsolutePosition
             // 
@@ -923,6 +890,33 @@ namespace Alturos.PanTilt.TestUI
             this.tabPageAbsolutePosition.Text = "Absolute Position Check";
             this.tabPageAbsolutePosition.UseVisualStyleBackColor = true;
             // 
+            // tabPageCommunicationHistory
+            // 
+            this.tabPageCommunicationHistory.Controls.Add(this.communicationHistoryControl1);
+            this.tabPageCommunicationHistory.Location = new System.Drawing.Point(4, 22);
+            this.tabPageCommunicationHistory.Name = "tabPageCommunicationHistory";
+            this.tabPageCommunicationHistory.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageCommunicationHistory.Size = new System.Drawing.Size(1125, 564);
+            this.tabPageCommunicationHistory.TabIndex = 2;
+            this.tabPageCommunicationHistory.Text = "Communication History";
+            this.tabPageCommunicationHistory.UseVisualStyleBackColor = true;
+            // 
+            // continiousMovementControl1
+            // 
+            this.continiousMovementControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.continiousMovementControl1.Location = new System.Drawing.Point(3, 3);
+            this.continiousMovementControl1.Name = "continiousMovementControl1";
+            this.continiousMovementControl1.Size = new System.Drawing.Size(1119, 558);
+            this.continiousMovementControl1.TabIndex = 20;
+            // 
+            // fastMovementControl1
+            // 
+            this.fastMovementControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.fastMovementControl1.Location = new System.Drawing.Point(3, 3);
+            this.fastMovementControl1.Name = "fastMovementControl1";
+            this.fastMovementControl1.Size = new System.Drawing.Size(1119, 558);
+            this.fastMovementControl1.TabIndex = 0;
+            // 
             // absolutePositionControl1
             // 
             this.absolutePositionControl1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -930,6 +924,25 @@ namespace Alturos.PanTilt.TestUI
             this.absolutePositionControl1.Name = "absolutePositionControl1";
             this.absolutePositionControl1.Size = new System.Drawing.Size(1119, 558);
             this.absolutePositionControl1.TabIndex = 0;
+            // 
+            // communicationHistoryControl1
+            // 
+            this.communicationHistoryControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.communicationHistoryControl1.Location = new System.Drawing.Point(3, 3);
+            this.communicationHistoryControl1.Name = "communicationHistoryControl1";
+            this.communicationHistoryControl1.Size = new System.Drawing.Size(1119, 558);
+            this.communicationHistoryControl1.TabIndex = 0;
+            // 
+            // checkBoxTiltInvert
+            // 
+            this.checkBoxTiltInvert.AutoSize = true;
+            this.checkBoxTiltInvert.Location = new System.Drawing.Point(246, 73);
+            this.checkBoxTiltInvert.Name = "checkBoxTiltInvert";
+            this.checkBoxTiltInvert.Size = new System.Drawing.Size(70, 17);
+            this.checkBoxTiltInvert.TabIndex = 25;
+            this.checkBoxTiltInvert.Text = "Invert Tilt";
+            this.checkBoxTiltInvert.UseVisualStyleBackColor = true;
+            this.checkBoxTiltInvert.CheckedChanged += new System.EventHandler(this.checkBoxTiltInvert_CheckedChanged);
             // 
             // Main
             // 
@@ -953,6 +966,7 @@ namespace Alturos.PanTilt.TestUI
             this.groupBoxSpeed.ResumeLayout(false);
             this.groupBoxSpeed.PerformLayout();
             this.tabPageManualControl.ResumeLayout(false);
+            this.tabPageManualControl.PerformLayout();
             this.groupBox6.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
@@ -975,8 +989,8 @@ namespace Alturos.PanTilt.TestUI
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_CameraPos)).EndInit();
             this.tabPageMovementCheck.ResumeLayout(false);
             this.tabPageFastMovement.ResumeLayout(false);
-            this.tabPageCommunicationHistory.ResumeLayout(false);
             this.tabPageAbsolutePosition.ResumeLayout(false);
+            this.tabPageCommunicationHistory.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -1057,6 +1071,7 @@ namespace Alturos.PanTilt.TestUI
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.TabPage tabPageAbsolutePosition;
         private CustomControl.AbsolutePositionControl absolutePositionControl1;
+        private System.Windows.Forms.CheckBox checkBoxTiltInvert;
     }
 }
 

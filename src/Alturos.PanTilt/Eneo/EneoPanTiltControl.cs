@@ -23,6 +23,7 @@ namespace Alturos.PanTilt.Eneo
         private readonly bool _debug;
         private readonly ICommunication _communication;
         private readonly Dictionary<double, byte> _speed = new Dictionary<double, byte>();
+        private bool _inverted;
 
         public event Action<PanTiltPosition> PositionChanged;
         public event Action LimitOverrun;
@@ -373,6 +374,7 @@ namespace Alturos.PanTilt.Eneo
             if (groupResponses.ContainsKey(ResponseType.TiltInfo))
             {
                 position.Tilt = groupResponses[ResponseType.TiltInfo].Select(o => ((TiltInfoResponse)o).Tilt).FirstOrDefault();
+                if (this._inverted) { position.Tilt *= -1; }
             }
 
             #endregion
@@ -537,7 +539,7 @@ namespace Alturos.PanTilt.Eneo
             return this.Send(command, $"SetSmoothing Acceleration:{acceleration} Gain:{gain}");
         }
 
-        public bool MovePanAbsolute(double panPosition)
+        private bool MovePanAbsolute(double panPosition)
         {
             var data = new byte[3];
             data[0] = 0xDC;
@@ -554,7 +556,7 @@ namespace Alturos.PanTilt.Eneo
             return this.Send(command, $"PanAbsolute {panPosition}");
         }
 
-        public bool MoveTiltAbsolute(double tiltPosition)
+        private bool MoveTiltAbsolute(double tiltPosition)
         {
             var data = new byte[3];
             data[0] = 0xDD;
@@ -580,7 +582,7 @@ namespace Alturos.PanTilt.Eneo
         /// </summary>
         /// <param name="panSpeed">degree per second</param>
         /// <param name="tiltSpeed">degree per second</param>
-        public bool MoveRelative(double panSpeed, double tiltSpeed)
+        private bool MoveRelative(double panSpeed, double tiltSpeed)
         {
             if (panSpeed == 0 && tiltSpeed == 0)
             {
@@ -672,32 +674,22 @@ namespace Alturos.PanTilt.Eneo
             return this.Send(command, $"MoveRelative Tilt:{tiltSpeed}  Pan:{panSpeed}");
         }
 
-        public bool StopMoving()
-        {
-            var data = new byte[1];
-            data[0] = 0x58;
-
-            var command = this.CreateCommand(data);
-            this.Send(command, "StopMoving");
-            return true;
-        }
-
-        public bool StopPanMovement()
+        private void StopPanMovement()
         {
             var data = new byte[1];
             data[0] = 0x49;
 
             var command = this.CreateCommand(data);
-            return this.Send(command, "StopPanMovement");
+            this.Send(command, "StopPanMovement");
         }
 
-        public bool StopTiltMovement()
+        private void StopTiltMovement()
         {
             var data = new byte[1];
             data[0] = 0x4A;
 
             var command = this.CreateCommand(data);
-            return this.Send(command, "StopTiltMovement");
+            this.Send(command, "StopTiltMovement");
         }
 
         #endregion
@@ -745,17 +737,38 @@ namespace Alturos.PanTilt.Eneo
 
         #region Limits
 
-        public void SetLimitRigth()
+        public void SetLimit(Limits limit)
+        {
+            switch (limit)
+            {
+                case Limits.Right:
+                    SetLimitRight();
+                    break;
+                case Limits.Left:
+                    SetLimitLeft();
+                    break;
+                case Limits.Up:
+                    if (this._inverted) { SetLimitDown(); }
+                    else { SetLimitUp(); }
+                    break;
+                case Limits.Down:
+                    if (this._inverted) { SetLimitUp(); }
+                    else { SetLimitDown(); }
+                    break;
+            }
+        }
+
+        private void SetLimitRight()
         {
             var data = new byte[1];
             data[0] = 0x6C;
 
             var command = this.CreateCommand(data);
-            this.Send(command, "SetLimitRigth");
+            this.Send(command, "SetLimitRight");
             this.LimitChanged?.Invoke();
         }
 
-        public void SetLimitLeft()
+        private void SetLimitLeft()
         {
             var data = new byte[1];
             data[0] = 0x77;
@@ -765,7 +778,7 @@ namespace Alturos.PanTilt.Eneo
             this.LimitChanged?.Invoke();
         }
 
-        public void SetLimitUp()
+        private void SetLimitUp()
         {
             var data = new byte[1];
             data[0] = 0x6B;
@@ -775,7 +788,7 @@ namespace Alturos.PanTilt.Eneo
             this.LimitChanged?.Invoke();
         }
 
-        public void SetLimitDown()
+        private void SetLimitDown()
         {
             var data = new byte[1];
             data[0] = 0x70;
@@ -942,11 +955,13 @@ namespace Alturos.PanTilt.Eneo
 
         public bool TiltAbsolute(double tilt)
         {
+            if (this._inverted) { tilt *= -1; }
             return this.MoveTiltAbsolute(tilt);
         }
 
         public bool PanTiltAbsolute(double pan, double tilt)
         {
+            if (this._inverted) { tilt *= -1; }
             if (this.MovePanAbsolute(pan) && this.MoveTiltAbsolute(tilt))
             {
                 return true;
@@ -962,17 +977,32 @@ namespace Alturos.PanTilt.Eneo
 
         public bool TiltRelative(double tiltSpeed)
         {
+            if (this._inverted) { tiltSpeed *= -1; }
             return this.MoveRelative(0, tiltSpeed);
         }
 
         public bool PanTiltRelative(double panSpeed, double tiltSpeed)
         {
+            if (this._inverted) { tiltSpeed *= -1; }
             return this.MoveRelative(panSpeed, tiltSpeed);
+        }
+
+        public bool StopMoving()
+        {
+            var data = new byte[1];
+            data[0] = 0x58;
+
+            var command = this.CreateCommand(data);
+            this.Send(command, "StopMoving");
+            return true;
         }
 
         public PanTiltPosition GetPosition()
         {
-            return this._position;
+            var position = this._position;
+            if (this._inverted) { position.Tilt *= -1; }
+
+            return position;
         }
 
         public PanTiltLimit GetLimits()
@@ -984,6 +1014,12 @@ namespace Alturos.PanTilt.Eneo
         {
             //TODO: Move logic from TestUI project
             return false;
+        }
+
+        public void InvertTilt(bool invert)
+        {
+            //TODO: Invert limits
+            this._inverted = invert;
         }
 
         #endregion

@@ -11,14 +11,14 @@ namespace Alturos.PanTilt
         private static ILog Log = LogManager.GetLogger(typeof(UdpReceiver));
 
         public UdpClient UdpClient { get; private set; }
-        private readonly IPAddress[] _allowedIpAddress;
+        private readonly IPAddress[] _allowedIpAddresses;
 
         public event Action<IPAddress, byte[]> OnPackageReceived;
 
         public UdpReceiver(int receivePort, IPAddress[] allowedIpAddresses)
         {
             this.UdpClient = new UdpClient(receivePort);
-            this._allowedIpAddress = allowedIpAddresses;
+            this._allowedIpAddresses = allowedIpAddresses;
 
             try
             {
@@ -49,7 +49,7 @@ namespace Alturos.PanTilt
             {
                 var received = this.UdpClient.EndReceive(result, ref remoteIpEndPoint);
 
-                if (this._allowedIpAddress.Contains(remoteIpEndPoint.Address))
+                if (this._allowedIpAddresses.Contains(remoteIpEndPoint.Address))
                 {
                     this.OnPackageReceived?.Invoke(remoteIpEndPoint.Address, received);
                 }

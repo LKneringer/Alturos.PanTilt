@@ -109,5 +109,10 @@ namespace Alturos.PanTilt
         /// </summary>
         /// <returns></returns>
         bool ReinitializePosition();
+
+        /// <summary>
+        /// Whether to invert the tilt or not
+        /// </summary>
+        void InvertTilt(bool invert);
     }
 }
